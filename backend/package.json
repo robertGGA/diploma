@@ -1,0 +1,14 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend",
+  "main": "index.js",
+  "scripts": {
+    "run": "node app.js"
+  },
+  "author": "Robert Gadelshin 11-009",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
