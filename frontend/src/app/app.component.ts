@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { TestService } from '@core/services/test.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
     selector: 'rg-root',
@@ -7,4 +9,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
     title = 'frontend';
+
+    constructor(private testService: TestService) {
+        this.testService
+            .testBackend()
+            .pipe(catchError(err => of(err)))
+            .subscribe(value => {
+                console.log(value);
+            });
+    }
 }
