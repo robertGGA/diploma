@@ -8,7 +8,7 @@ import { catchError, of } from 'rxjs';
     styleUrls: ['./app.component.sass'],
 })
 export class AppComponent {
-    title = 'frontend';
+    title = 'NERF Service';
 
     constructor(private testService: TestService) {
         this.testService
