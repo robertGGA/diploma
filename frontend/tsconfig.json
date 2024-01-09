@@ -27,7 +27,9 @@
             "@features/*": [
                 "src/app/features/*"
             ],
-
+            "@styles/*": [
+                "src/app/styles/*"
+            ],
             "@core/*": [
                 "src/app/core/*"
             ],
