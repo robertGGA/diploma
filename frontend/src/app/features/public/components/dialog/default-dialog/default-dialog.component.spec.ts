@@ -1,6 +1,6 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {DefaultDialogComponent} from './default-dialog.component';
+import { DefaultDialogComponent } from './default-dialog.component';
 
 describe('DefaultDialogComponent', () => {
     let component: DefaultDialogComponent;
@@ -8,7 +8,7 @@ describe('DefaultDialogComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [DefaultDialogComponent]
+            imports: [DefaultDialogComponent],
         });
         fixture = TestBed.createComponent(DefaultDialogComponent);
         component = fixture.componentInstance;

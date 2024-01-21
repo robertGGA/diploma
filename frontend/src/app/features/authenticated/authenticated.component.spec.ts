@@ -3,19 +3,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthenticatedComponent } from './authenticated.component';
 
 describe('AuthenticatedComponent', () => {
-  let component: AuthenticatedComponent;
-  let fixture: ComponentFixture<AuthenticatedComponent>;
+    let component: AuthenticatedComponent;
+    let fixture: ComponentFixture<AuthenticatedComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [AuthenticatedComponent]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [AuthenticatedComponent],
+        });
+        fixture = TestBed.createComponent(AuthenticatedComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
-    fixture = TestBed.createComponent(AuthenticatedComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

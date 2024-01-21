@@ -13,8 +13,8 @@ export class TestService {
     testBackend(): Observable<string> {
         return this.http.get<string>(`${this.url}`, {
             headers: {
-                'Accept': 'text/*'
-            }
+                Accept: 'text/*',
+            },
         });
     }
 }

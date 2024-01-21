@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {DefaultDialogComponent} from "@features/public/components/dialog/default-dialog/default-dialog.component";
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DefaultDialogComponent } from '@features/public/components/dialog/default-dialog/default-dialog.component';
 
 @Component({
     selector: 'rg-login-page',
@@ -10,5 +10,4 @@ import {DefaultDialogComponent} from "@features/public/components/dialog/default
     styleUrls: ['./login-page.component.sass'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginPageComponent {
-}
+export class LoginPageComponent {}
