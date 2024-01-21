@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
     {
-      path: '**',
-      redirectTo: 'login'
+        path: '**',
+        redirectTo: 'login',
     },
     {
         path: 'profile',
@@ -18,7 +18,9 @@ const routes: Routes = [
         path: 'login',
         pathMatch: 'full',
         loadComponent: () =>
-            import('./features/public/pages/login-page/login-page.component').then(c => c.LoginPageComponent)
+            import(
+                './features/public/pages/login-page/login-page.component'
+            ).then(c => c.LoginPageComponent),
     },
 ];
 
