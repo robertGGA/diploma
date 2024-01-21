@@ -2,7 +2,6 @@
   "name": "diploma",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "frontend:lint": "cd ./frontend && npm run lint:fix",
     "backend:lint": "cd ./backend && npm run lint",

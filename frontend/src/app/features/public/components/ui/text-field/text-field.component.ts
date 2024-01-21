@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'rg-text-field',
@@ -7,8 +7,6 @@ import {CommonModule} from '@angular/common';
     imports: [CommonModule],
     templateUrl: './text-field.component.html',
     styleUrls: ['./text-field.component.sass'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextFieldComponent {
-
-}
+export class TextFieldComponent {}
