@@ -3,15 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
     {
-        path: '**',
-        redirectTo: 'login',
-    },
-    {
-        path: 'profile',
-        pathMatch: 'full',
+        path: '',
         loadChildren: () =>
-            import('./features/authenticated/authenticated.routes').then(
-                r => r.AUTHENTICATED_ROUTES
+            import('@features/authenticated/authenticated-routing.module').then(
+                r => r.AuthenticatedRoutingModule
             ),
     },
     {
@@ -19,8 +14,12 @@ const routes: Routes = [
         pathMatch: 'full',
         loadComponent: () =>
             import(
-                './features/public/pages/login-page/login-page.component'
+                '@features/public/pages/login-page/login-page.component'
             ).then(c => c.LoginPageComponent),
+    },
+    {
+        path: '**',
+        redirectTo: 'login',
     },
 ];
 

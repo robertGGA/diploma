@@ -1,3 +1,6 @@
-<div class="form-field-container">
-    <ng-content> </ng-content>
+<div id="none" class="form-field-container">
+    <label for="none" *ngIf="isFloatingLabel" class="form-field-label">
+        <ng-content select="[label]"></ng-content>
+    </label>
+    <ng-content></ng-content>
 </div>

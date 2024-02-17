@@ -1,15 +1,21 @@
-import { Directive, OnInit, OnDestroy, ElementRef, Inject, Input } from '@angular/core';
+import {
+    Directive,
+    OnInit,
+    OnDestroy,
+    ElementRef,
+    Inject,
+    Input,
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
-import {Theme} from "@shared/modules/theme/types/theme-types";
-import {ThemeService} from "@shared/modules/theme/services/theme.service";
+import { Theme } from '@shared/modules/theme/types/theme-types';
+import { ThemeService } from '@shared/modules/theme/services/theme.service';
 
 @Directive({
-    selector: '[rgTheme]'
+    selector: '[rgTheme]',
 })
 export class ThemeDirective implements OnInit, OnDestroy {
-
     /**
      * Whether the styles are scoped or not.
      */
@@ -62,7 +68,8 @@ export class ThemeDirective implements OnInit, OnDestroy {
      * Element to attach the styles to.
      */
     getElement() {
-        return this.scoped ? this._elementRef.nativeElement : this._document.body;
+        return this.scoped
+            ? this._elementRef.nativeElement
+            : this._document.body;
     }
-
 }
