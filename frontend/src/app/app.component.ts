@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { TestService } from '@core/services/test.service';
-import { catchError, of } from 'rxjs';
 
 @Component({
     selector: 'rg-root',
@@ -9,13 +7,4 @@ import { catchError, of } from 'rxjs';
 })
 export class AppComponent {
     title = 'NERF Service';
-
-    constructor(private testService: TestService) {
-        this.testService
-            .testBackend()
-            .pipe(catchError(err => of(err)))
-            .subscribe(value => {
-                console.log(value);
-            });
-    }
 }

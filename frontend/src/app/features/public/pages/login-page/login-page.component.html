@@ -1,8 +1,9 @@
 <main>
     <rg-default-dialog class="login-container">
-        <rg-form-field>
-            <input />
-        </rg-form-field>
-        <button>submit</button>
+        <form [formGroup]="loginFormGroup">
+            <input placeholder="username" formControlName="email" />
+            <input placeholder="password" formControlName="password" />
+            <button [disabled]="!isValid" (click)="submit()">submit</button>
+        </form>
     </rg-default-dialog>
 </main>

@@ -1,0 +1,18 @@
+@import "sizing/sizing"
+
+\:host
+    display: flex
+    flex-direction: column
+    margin: 40px auto 0 auto
+    width: 100%
+    max-width: 1440px
+
+    @include _1280
+        max-width: 1280px
+
+    @include _979
+        max-width: 979px
+
+    @include _600
+        max-width: 600px
+

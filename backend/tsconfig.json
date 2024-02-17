@@ -1,21 +1,36 @@
 {
+    "ts-node": {
+        "require": ["tsconfig-paths/register"],
+        // these options are overrides used only by ts-node
+        // same as the --compilerOptions flag and the TS_NODE_COMPILER_OPTIONS environment variable
+        "compilerOptions": {
+            "module": "commonjs"
+        }
+    },
     "compilerOptions": {
-        "module": "commonjs",
-        "declaration": true,
-        "removeComments": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "allowSyntheticDefaultImports": true,
-        "target": "ES2021",
-        "sourceMap": true,
+        "target": "ES2022",
+        "module": "ES2022",
         "outDir": "./dist",
-        "baseUrl": "./",
-        "incremental": true,
+        "strict": true,
+        "esModuleInterop": false,
         "skipLibCheck": true,
-        "strictNullChecks": true,
-        "noImplicitAny": true,
-        "strictBindCallApply": true,
         "forceConsistentCasingInFileNames": true,
-        "noFallthroughCasesInSwitch": true
-    }
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "strictPropertyInitialization": false,
+        "emitDecoratorMetadata": true,
+        "baseUrl": "./",
+        "paths": {
+            "@src/*": ["src/*"],
+            "@migrations/*": ["src/migrations/*"],
+            "@routers/*": ["src/routers/*"],
+            "@controllers/*": ["src/controllers/*"],
+            "@config/*": ["src/config/*"],
+            "@services/*": ["src/services/*"],
+            "@entity/*": ["src/entity/*"]
+        }
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules"]
 }
