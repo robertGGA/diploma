@@ -1,0 +1,12 @@
+<div class="image-wrapper">
+    <img
+        *ngIf="image; else emptyTemplate"
+        alt="image"
+        [src]="image | fileTransformToUrl | sanitizer" />
+
+    <button (click)="click()" class="image-hovered-content">X</button>
+
+    <p>Название: {{ image.name }}</p>
+</div>
+
+<ng-template #emptyTemplate> </ng-template>

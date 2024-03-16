@@ -5,7 +5,7 @@ import * as cookieParser from 'cookie-parser';
 import { Express, Router } from 'express';
 import { router } from './src/routers/router';
 import { dataSource } from './src/db/db';
-import { DataSource } from 'typeorm';
+import * as path from 'path'
 
 class Bootstrap {
     app: Express;
@@ -16,6 +16,7 @@ class Bootstrap {
         this.PORT = process.env.PORT || '3000';
         this.app = express();
         this.registerMiddleware([express.json(), cookieParser(), cors()]);
+        this.app.use('/assets', express.static(path.join(__dirname, 'assets')))
         this.registerRouters([{ path: '/api', router: router }]);
     }
 
