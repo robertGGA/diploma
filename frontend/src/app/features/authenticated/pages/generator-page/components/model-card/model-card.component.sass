@@ -1,0 +1,29 @@
+
+.image
+    &-wrapper
+        max-width: 200px
+        width: 100%
+        position: relative
+
+
+        &:hover
+            & .image-hovered-content
+                visibility: visible
+
+            & img
+                filter: brightness(40%)
+
+        & img
+            transition: 0.1s linear
+
+        & p
+            word-wrap: break-word
+
+    &-hovered
+        &-content
+            cursor: pointer
+            color: white
+            position: absolute
+            visibility: hidden
+            top: 10px
+            right: 10px

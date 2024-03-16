@@ -21,6 +21,7 @@
         "strictPropertyInitialization": false,
         "emitDecoratorMetadata": true,
         "baseUrl": "./",
+        "types": ["node"],
         "paths": {
             "@src/*": ["src/*"],
             "@migrations/*": ["src/migrations/*"],

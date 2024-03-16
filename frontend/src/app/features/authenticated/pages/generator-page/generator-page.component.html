@@ -1,1 +1,38 @@
-<p>generator-page works!</p>
+<div
+    [class.scene-wrapper-empty]="!(fileList$ | async)?.size"
+    class="scene-wrapper">
+    <div *ngIf="fileList$ | async as fileList" class="scene-list">
+        <rg-model-card
+            *ngFor="let file of fileList | keyvalue"
+            (imageClick)="removeFile($event)"
+            [image]="file.value">
+        </rg-model-card>
+    </div>
+    <div class="scene">
+        <canvas rgScene></canvas>
+
+        <form [formGroup]="formGroup" class="upload-container">
+            <rg-drag-n-drop
+                [removePreviousValue]="false"
+                [multiple]="true"
+                (change)="sendFile()"
+                [accept]="[ACCEPT_TYPES.IMAGE, ACCEPT_TYPES.VIDEO]"
+                [labelTemplate]="drag"
+                [hoveredTemplate]="hovered"
+                class="upload-drag"
+                formControlName="file">
+                Перенеси или
+            </rg-drag-n-drop>
+        </form>
+    </div>
+</div>
+
+<ng-template #drag>
+    <p class="drag-submit">нажми сюда чтобы загрузить файл</p>
+</ng-template>
+
+<ng-template #hovered>
+    <div class="hovered-container">
+        <p>Отпусти для загрузки</p>
+    </div>
+</ng-template>

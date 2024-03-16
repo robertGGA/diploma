@@ -2,7 +2,6 @@ import { Router, RouterOptions } from 'express';
 import { RouterExtension } from '@routers/router-types';
 import { authController } from '@src/auth/controllers/auth-controller';
 
-//
 export class AuthRouter extends RouterExtension {
     constructor(routerConfig?: RouterOptions) {
         super(routerConfig);

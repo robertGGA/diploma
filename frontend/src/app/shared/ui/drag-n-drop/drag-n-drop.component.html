@@ -1,0 +1,27 @@
+<div
+    class="drag-wrapper"
+    [class.dragged]="isHovered"
+    (dragend)="onDragEnd($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+    (dragenter)="onDrag($event)"
+    (dragover)="onDrag($event)"
+    (dragstart)="onDrag($event)">
+    <ng-container *ngIf="!isHovered; else hovered">
+        <input
+            [accept]="accept.join(', ')"
+            [multiple]="multiple"
+            hidden
+            type="file"
+            id="fileUpload"
+            (change)="changeOnLoad($event)" />
+        <ng-content></ng-content>
+        <label for="fileUpload">
+            <ng-container *ngTemplateOutlet="labelTemplate"> </ng-container>
+        </label>
+    </ng-container>
+</div>
+
+<ng-template #hovered>
+    <ng-container *ngTemplateOutlet="hoveredTemplate"> </ng-container>
+</ng-template>
