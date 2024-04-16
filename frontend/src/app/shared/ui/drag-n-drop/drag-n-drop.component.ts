@@ -95,7 +95,6 @@ export class DragNDropComponent<T> implements ControlValueAccessor, OnInit {
     }
 
     changeOnLoad(event: Event): void {
-        console.log('changed');
         let array: File[] = [];
         const files: FileList | null = (event.target as HTMLInputElement).files;
         if (files) {
@@ -118,7 +117,6 @@ export class DragNDropComponent<T> implements ControlValueAccessor, OnInit {
     }
 
     private emit(array: File[]): void {
-        console.log('emit');
         let result: File[] = [];
 
         if (!this.removePreviousValue && this.value) {
