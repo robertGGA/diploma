@@ -12,7 +12,6 @@ export class User {
     @Column()
     password: string;
 
-    @Column({type: 'bool'})
-    isActive?: boolean
-
+    @Column({ type: 'bool' })
+    isActive?: boolean;
 }

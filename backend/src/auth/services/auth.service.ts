@@ -15,9 +15,9 @@ export class AuthorizationService {
             }
             const hashedPassword = await bcrypt.hash(password, 3);
             const user = (await UserRepository.createUser({
-                id: "",
+                id: '',
                 name: username,
-                password: hashedPassword
+                password: hashedPassword,
             })) as unknown as UserDto;
             const userDto = new UserDto(user);
             const tokens = TokenServiceInstance.generateTokens(user);

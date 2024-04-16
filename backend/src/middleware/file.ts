@@ -1,8 +1,4 @@
-import {
-    diskStorage,
-    StorageEngine,
-    FileFilterCallback,
-} from 'multer';
+import { diskStorage, StorageEngine, FileFilterCallback } from 'multer';
 
 const multer = require('multer');
 
@@ -30,7 +26,6 @@ const fileFilter = (
     }
 };
 
-
-const FileMiddleware = multer({storage: storage, fileFilter: fileFilter});
+const FileMiddleware = multer({ storage: storage, fileFilter: fileFilter });
 
 export default FileMiddleware;

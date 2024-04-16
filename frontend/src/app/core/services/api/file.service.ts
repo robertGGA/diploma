@@ -9,10 +9,14 @@ export class FileService {
     private API_URL = 'api/file';
 
     http = inject(HttpClient);
+
     upload(file: File): Observable<any> {
         const formData = new FormData();
         formData.append('file', file);
-        console.log(formData);
         return this.http.post(this.API_URL + '/upload', formData);
+    }
+
+    pythonExecute(body: { first: number; second: number }): Observable<any> {
+        return this.http.post(this.API_URL + '/python', body);
     }
 }

@@ -17,6 +17,8 @@ export class GenerateRouter extends RouterExtension {
             generateController.upload
         );
 
+        this.router.post('/python', generateController.testPython);
+
         return this.router;
     }
 

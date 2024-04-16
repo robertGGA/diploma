@@ -1,4 +1,4 @@
-import {User} from "@src/user/entity/user";
+import { User } from '@src/user/entity/user';
 
 class UserService {
     constructor() {}

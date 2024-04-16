@@ -15,6 +15,6 @@ export abstract class RouterExtension {
 }
 
 export interface RouteConfig {
-    path: string,
-    controllerMethod: Function
+    path: string;
+    controllerMethod: Function;
 }

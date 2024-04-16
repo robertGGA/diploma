@@ -1,6 +1,6 @@
-import jwt, {SignOptions} from 'jsonwebtoken';
-import {TokenRepository} from '@src/auth/repositories/token.repository';
-import {Token} from '@src/auth/entity/token';
+import jwt, { SignOptions } from 'jsonwebtoken';
+import { TokenRepository } from '@src/auth/repositories/token.repository';
+import { Token } from '@src/auth/entity/token';
 
 class TokenService {
     generateTokens(payload: string | Buffer | object) {

@@ -9,7 +9,14 @@
         </rg-model-card>
     </div>
     <div class="scene">
-        <canvas rgScene></canvas>
+        <div #canvas [class.expanded]="isExpanded" class="scene-main">
+            <ng-container *ngIf="(loading$ | async) === falseg; else loading">
+                <canvas rgScene></canvas>
+                <div class="canvas-list">
+                    <button (click)="expandCanvas()">expand</button>
+                </div>
+            </ng-container>
+        </div>
 
         <form [formGroup]="formGroup" class="upload-container">
             <rg-drag-n-drop
@@ -36,3 +43,5 @@
         <p>Отпусти для загрузки</p>
     </div>
 </ng-template>
+
+<ng-template #loading> Загрузка... </ng-template>
