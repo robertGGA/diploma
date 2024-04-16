@@ -13,5 +13,5 @@ export const TokenRepository = dataSource.getRepository(Token).extend({
             .into('Token')
             .values(token)
             .execute();
-    }
+    },
 });

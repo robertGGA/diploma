@@ -15,6 +15,7 @@ import { Camera, PerspectiveCamera } from 'three';
 })
 export class SceneDirective implements AfterViewInit, OnInit {
     @Input() camera?: Camera;
+
     constructor(
         private canvas: ElementRef<HTMLCanvasElement>,
         @SkipSelf() private sceneService: ThreeSceneService

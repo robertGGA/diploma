@@ -1,4 +1,9 @@
-import { ElementRef, Injectable, Renderer2 } from '@angular/core';
+import {
+    ChangeDetectorRef,
+    ElementRef,
+    Injectable,
+    Renderer2,
+} from '@angular/core';
 import { Camera, Object3D, Scene, WebGLRenderer } from 'three';
 
 @Injectable({
@@ -7,11 +12,13 @@ import { Camera, Object3D, Scene, WebGLRenderer } from 'three';
 export class ThreeSceneService {
     private scene: Scene;
     webGLRenderer: WebGLRenderer | null = null;
-    private camera?: Camera;
+    private camera: Camera | null = null;
+    private animationIds: number[] = [];
 
     constructor(
         private renderer: Renderer2,
-        private canvas: ElementRef<HTMLCanvasElement>
+        private canvas: ElementRef<HTMLCanvasElement>,
+        private cdr: ChangeDetectorRef
     ) {
         this.scene = new Scene();
     }
@@ -19,9 +26,16 @@ export class ThreeSceneService {
     get threeScene(): Scene {
         return this.scene;
     }
-
     get threeCanvas(): ElementRef<HTMLCanvasElement> {
         return this.canvas;
+    }
+
+    get webRenderer(): WebGLRenderer | null {
+        return this.webGLRenderer;
+    }
+
+    get currentCamera(): Camera | null {
+        return this.camera;
     }
 
     build(
@@ -44,8 +58,6 @@ export class ThreeSceneService {
         });
     }
 
-    private createCanvas(): void {}
-
     addExtension(ext: Object3D): ThreeSceneService {
         if (!this.isSceneCreated) throw Error('Init scene first');
 
@@ -55,6 +67,7 @@ export class ThreeSceneService {
         }
 
         this.scene.add(ext);
+        this.cdr.detectChanges();
         return this;
     }
 
@@ -73,21 +86,42 @@ export class ThreeSceneService {
         return !!this.scene;
     }
 
-    startRenderingLoop() {
+    startRenderingLoop(
+        width = 1000,
+        height = 400,
+        renderFunction?: () => void
+    ) {
         this.webGLRenderer = new WebGLRenderer({
             canvas: this.canvas.nativeElement,
+            alpha: true,
         });
-        this.webGLRenderer.setSize(1000, 400);
+        this.webGLRenderer.setSize(width, height);
 
         if (!this.camera) {
             throw new Error('Add camera instance');
         }
+
         this.camera.position.z = 5;
         const render = () => {
+            if (renderFunction) {
+                renderFunction();
+            }
             requestAnimationFrame(render);
             this.webGLRenderer?.render(this.scene, this.camera!);
         };
 
         render();
+    }
+
+    cancelAnimationFrame(id?: number): void {
+        if (id) {
+            cancelAnimationFrame(id);
+            return;
+        }
+    }
+
+    cancelAllAnimations(): void {
+        this.animationIds.forEach(id => cancelAnimationFrame(id));
+        this.animationIds = [];
     }
 }
