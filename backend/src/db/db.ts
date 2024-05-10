@@ -10,7 +10,6 @@ export const pool = new Pool({
     database: process.env.DBNAME,
 });
 
-//d
 export const dataSource = new DataSource({
     type: 'postgres',
     host: 'localhost',

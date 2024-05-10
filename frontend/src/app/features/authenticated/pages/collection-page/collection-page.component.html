@@ -1,1 +1,10 @@
-<p>collection-page works!</p>
+<mat-form-field>
+    <mat-label>Choose a date</mat-label>
+    <input
+        rgMask="/^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/"
+        matInput
+        [matDatepicker]="picker" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>

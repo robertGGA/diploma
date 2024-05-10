@@ -1,8 +1,10 @@
 <div class="image-wrapper">
-    <img
-        *ngIf="image; else emptyTemplate"
-        alt="image"
-        [src]="image | fileTransformToUrl | sanitizer" />
+    <ng-container *ngIf="image; else emptyTemplate">
+        <img
+            *ngIf="!isVideo(); else video"
+            alt="image"
+            [src]="image | fileTransformToUrl | sanitizer" />
+    </ng-container>
 
     <button (click)="click()" class="image-hovered-content">X</button>
 
@@ -10,3 +12,9 @@
 </div>
 
 <ng-template #emptyTemplate> </ng-template>
+
+<ng-template #video>
+    <video>
+        <source />
+    </video>
+</ng-template>

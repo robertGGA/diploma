@@ -1,10 +1,17 @@
-import {NextFunction, Request, Response} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import * as child from 'child_process';
+import { transformVideoToImages } from '@services/file.service';
 
 class GenerateController {
     async upload(req: Request<{}, {}>, res: Response) {
         try {
             if (req.file) {
+                if (req.file.mimetype.includes('video')) {
+                    const result = await transformVideoToImages(
+                        req.file.originalname
+                    );
+                    return res.json(result);
+                }
                 res.setHeader('Content-type', req.file.mimetype);
                 return res.json(req.file);
             }
@@ -12,23 +19,20 @@ class GenerateController {
                 error: 'Wrong type of file',
             });
         } catch (e) {
+            console.log(e);
             res.status(400).send({
                 error: 'Cannot handle file',
             });
         }
     }
 
-    async testPython(
-        req: Request<{}, {}, { images: File[] }>,
-        res: Response
-    ) {
+    async testPython(req: Request<{}, {}, { images: File[] }>, res: Response) {
         try {
             const result = await executePython<any>(
-                '/Users/gadelshinrr/Desktop/repos/diploma/python-libs/object-finder/index.py',
+                '/Users/gadelshinrr/Desktop/diploma/python-libs/object-finder/index.py',
                 req.body.images
             );
-            res.json({res: result});
-
+            res.json({ res: result });
         } catch (e) {
             res.status(500).send(e);
         }

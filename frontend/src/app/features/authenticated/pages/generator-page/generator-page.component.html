@@ -7,13 +7,57 @@
             (imageClick)="removeFile($event)"
             [image]="file.value">
         </rg-model-card>
+        <button
+            [disabled]="loading$ | async"
+            *ngIf="fileList.size > 0"
+            (click)="sendFile()">
+            {{ (loading$ | async) ? 'Загрузка' : 'Отправить' }}
+        </button>
     </div>
     <div class="scene">
         <div #canvas [class.expanded]="isExpanded" class="scene-main">
-            <ng-container *ngIf="(loading$ | async) === falseg; else loading">
+            <ng-container *ngIf="(loading$ | async) === false; else loading">
                 <canvas rgScene></canvas>
+                <rg-generator-side-menu class="side-menu">
+                    <ng-container buttons>
+                        <ul>
+                            <button (click)="reset()">
+                                <mat-icon
+                                    aria-hidden="false"
+                                    fontIcon="restart_alt"></mat-icon>
+                            </button>
+                            <button (click)="showGridMatrix()">
+                                <mat-icon
+                                    aria-hidden="false"
+                                    [fontIcon]="
+                                        isVisibleGrid
+                                            ? 'border_clear'
+                                            : 'border_all'
+                                    "></mat-icon>
+                            </button>
+                        </ul>
+                        <ul>
+                            <button *ngIf="currentModel" (click)="download()">
+                                <mat-icon
+                                    aria-hidden="false"
+                                    fontIcon="download"></mat-icon>
+                            </button>
+                            <button (click)="setAutoRotate()">
+                                <mat-icon
+                                    aria-hidden="false"
+                                    fontIcon="settings"></mat-icon>
+                            </button>
+                        </ul>
+                    </ng-container>
+                </rg-generator-side-menu>
                 <div class="canvas-list">
-                    <button (click)="expandCanvas()">expand</button>
+                    <button (click)="expandCanvas()">
+                        <mat-icon
+                            aria-hidden="false"
+                            [fontIcon]="
+                                isExpanded ? 'close_fullscreen' : 'open_in_full'
+                            "></mat-icon>
+                    </button>
                 </div>
             </ng-container>
         </div>
@@ -22,8 +66,14 @@
             <rg-drag-n-drop
                 [removePreviousValue]="false"
                 [multiple]="true"
-                (change)="sendFile()"
-                [accept]="[ACCEPT_TYPES.IMAGE, ACCEPT_TYPES.VIDEO]"
+                [accept]="[
+                    ACCEPT_TYPES['IMAGE/JPG'],
+                    ACCEPT_TYPES['IMAGE/JPEG'],
+                    ACCEPT_TYPES['IMAGE/PNG'],
+                    ACCEPT_TYPES['VIDEO/MPEG'],
+                    ACCEPT_TYPES['VIDEO/MP3'],
+                    ACCEPT_TYPES['VIDEO/MP4']
+                ]"
                 [labelTemplate]="drag"
                 [hoveredTemplate]="hovered"
                 class="upload-drag"
@@ -44,4 +94,4 @@
     </div>
 </ng-template>
 
-<ng-template #loading> Загрузка... </ng-template>
+<ng-template #loading> Загрузка...</ng-template>

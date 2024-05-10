@@ -1,10 +1,10 @@
 import sys
 
-a = int(sys.argv[1])
-b = int(sys.argv[2])
+# file = Blob(sys.argv[1])
+#
+# # result = await execute('./../stable-dreamfusion/index.py', file)
+#
+# if result:
+#     sys.stdout.flush(result)
 
-c = a / b
-
-print(c)
-
-sys.stdout.flush(c)
+sys.stdout.flush()
