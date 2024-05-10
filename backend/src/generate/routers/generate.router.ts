@@ -13,7 +13,7 @@ export class GenerateRouter extends RouterExtension {
     createRouter(): Router {
         this.router.post(
             '/upload',
-            FileMiddleware.single('file'),
+            [FileMiddleware.single('file')],
             generateController.upload
         );
 

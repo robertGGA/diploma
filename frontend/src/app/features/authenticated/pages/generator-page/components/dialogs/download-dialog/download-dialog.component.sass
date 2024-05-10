@@ -1,0 +1,35 @@
+@import "mixins"
+@import "variables/variables"
+@import "typography/typography"
+
+\:host
+
+    main
+        display: flex
+        flex-direction: column
+        max-width: 600px
+        width: 100%
+        padding: 20px
+
+    header
+        background-color: $c-gray
+        padding: 20px
+
+        h1
+            @include h1
+
+    footer
+        display: flex
+        justify-content: flex-end
+        padding: 20px
+        background-color: $c-gray
+
+        button
+            background-color: white
+            border: 1px solid white
+            border-radius: 6px
+            padding: 5px
+
+            &:hover
+                border: 1px solid black
+

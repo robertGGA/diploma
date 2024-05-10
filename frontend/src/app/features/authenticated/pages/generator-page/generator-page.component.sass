@@ -17,6 +17,7 @@
 
     &-main
         position: relative
+        overflow: hidden
 
     &-wrapper
         display: flex
@@ -37,6 +38,19 @@
         row-gap: 25px
         max-height: 80vh
         overflow-y: scroll
+
+        button
+            padding: 5px
+            border: 1px solid $c-green
+            border-radius: 6px
+            color: $c-green
+            transition: 0.1s
+
+
+
+            &:not([disabled]):hover
+                color: white
+                background-color: $c-green
 
 
 .upload
@@ -73,6 +87,9 @@
             cursor: pointer
             color: black
 
+            &:hover
+                color: grey
+
     &-expanded
         position: absolute
         left: 0
@@ -86,6 +103,29 @@
             height: 100% !important
             border: none
             border-bottom: 1px solid black
+
+.side-menu
+    position: absolute
+    right: 15px
+    top: 5%
+    align-items: flex-end
+
+    ul
+        padding: 0
+        display: flex
+        flex-direction: column
+        background-color: white
+
+
+        button
+            display: flex
+            height: fit-content
+            cursor: pointer
+            transition: 100ms
+
+            &:hover
+                background-color: gray
+                opacity: 0.8
 
 
 .expanded

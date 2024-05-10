@@ -1,0 +1,11 @@
+Model Information:
+* title:	test GLTF 1
+* source:	https://sketchfab.com/3d-models/test-gltf-1-e0e2cf91551543a58be22104d98bff40
+* author:	forux (https://sketchfab.com/forux)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "test GLTF 1" (https://sketchfab.com/3d-models/test-gltf-1-e0e2cf91551543a58be22104d98bff40) by forux (https://sketchfab.com/forux) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

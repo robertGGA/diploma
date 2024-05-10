@@ -1,0 +1,17 @@
+<rg-default-dialog>
+    <header>
+        <h1>Загрузка файла:</h1>
+    </header>
+
+    <main>
+        <ul *ngIf="data">
+            <li>
+                <a [href]="modelLink" download>Скачать GLTF-модель</a>
+            </li>
+        </ul>
+    </main>
+
+    <footer>
+        <button (click)="closeDialog()">Закрыть</button>
+    </footer>
+</rg-default-dialog>

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap')
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap')
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons")
 @import theme/themes
 
 /* Указываем box sizing */
@@ -72,6 +73,12 @@ select
     background: none
     border: none
 
+button
+    cursor: pointer
+
+ul
+    list-style-type: none
+
 
 /* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
 @media (prefers-reduced-motion: reduce)
@@ -80,3 +87,25 @@ select
         animation-iteration-count: 1 !important
         transition-duration: 0.01ms !important
         scroll-behavior: auto !important
+
+.dialog
+    &-overlay
+        margin: auto
+        max-height: 50vh
+        position: absolute !important
+        max-width: 500px
+        width: 100%
+        left: 50%
+        top: 50%
+        transform: translate(-50%,-50%)
+
+    &-backdrop
+        height: 100vh
+        width: 100vw
+        position: absolute
+        top: 0
+        margin: auto
+        background-color: rgba(gray, 0.3)
+
+        cdk-global-overlay-wrapper
+            top: 100px

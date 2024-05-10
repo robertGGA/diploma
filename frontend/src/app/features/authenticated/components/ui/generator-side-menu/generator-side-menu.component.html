@@ -1,0 +1,11 @@
+<button
+    class="switch-btn"
+    [class.switch-btn-rotated]="isOpened"
+    [disabled]="disabled"
+    (click)="switchMenu()">
+    <mat-icon aria-hidden="false" fontIcon="chevron_left"></mat-icon>
+</button>
+
+<ul class="list" *ngIf="isOpened">
+    <ng-content select="[buttons]"></ng-content>
+</ul>

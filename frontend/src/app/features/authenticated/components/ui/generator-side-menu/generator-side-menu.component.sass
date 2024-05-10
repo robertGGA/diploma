@@ -1,0 +1,54 @@
+\:host
+    display: flex
+    flex-direction: column
+
+.switch-btn
+    display: flex
+    padding: 5px
+    border: 1px solid black
+    border-radius: 30px
+    width: fit-content
+    transition: 500ms
+
+    &:hover
+        background: black
+        color: white
+
+    &-rotated
+        transform: rotate(180deg)
+
+.list
+    display: flex
+    flex-direction: row
+    align-items: flex-start
+    border: 1px solid black
+    transition: 200ms
+    margin-top: 10%
+    gap: 0.1px
+
+    & ul
+        padding: 0
+
+        &:first-child
+            border-right: 1px solid black
+
+        &:last-child
+            border-left: 1px solid black
+
+    & button
+        display: flex
+        width: 100%
+        align-items: flex-start
+        background-color: rgba(#d3d3d3, 0.4)
+        cursor: pointer
+        transition: 100ms
+        padding: 2px
+
+
+        &:hover
+            color: white
+
+
+        &:not(:first-child)
+            border-top: 1px solid black
+

@@ -26,6 +26,11 @@ export class ThreeSceneService {
     get threeScene(): Scene {
         return this.scene;
     }
+
+    getAllObjects(): Object3D[] {
+        return this.scene.children;
+    }
+
     get threeCanvas(): ElementRef<HTMLCanvasElement> {
         return this.canvas;
     }
@@ -90,7 +95,7 @@ export class ThreeSceneService {
         width = 1000,
         height = 400,
         renderFunction?: () => void
-    ) {
+    ): number | null {
         this.webGLRenderer = new WebGLRenderer({
             canvas: this.canvas.nativeElement,
             alpha: true,
@@ -101,16 +106,22 @@ export class ThreeSceneService {
             throw new Error('Add camera instance');
         }
 
+        let id: number | null = null;
+
         this.camera.position.z = 5;
         const render = () => {
             if (renderFunction) {
                 renderFunction();
             }
-            requestAnimationFrame(render);
+            id = requestAnimationFrame(render);
+            this.animationIds.push(id);
+
             this.webGLRenderer?.render(this.scene, this.camera!);
         };
 
         render();
+
+        return id;
     }
 
     cancelAnimationFrame(id?: number): void {
