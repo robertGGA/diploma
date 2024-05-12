@@ -4,10 +4,10 @@ import {
     EventEmitter,
     inject,
     Input,
-    OnInit,
     Output,
 } from '@angular/core';
 import { DestroyService } from '@core/services/destroy.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
     selector: 'rg-model-card',
@@ -20,6 +20,7 @@ export class ModelCardComponent {
     @Input() image!: File;
     @Output() imageClick: EventEmitter<string> = new EventEmitter<string>();
     destroy$ = inject(DestroyService);
+    sanitizer = inject(DomSanitizer);
 
     click(): void {
         this.imageClick.emit(this.image.name);
@@ -29,7 +30,11 @@ export class ModelCardComponent {
         return this.image.type.includes('video');
     }
 
-    playVideo(): void {}
+    playVideo(): SafeUrl {
+        return this.sanitizer.bypassSecurityTrustUrl(
+            URL.createObjectURL(this.image)
+        );
+    }
 
     get videoPath(): string | null {
         if (this.isVideo()) {
