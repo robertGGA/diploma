@@ -9,6 +9,7 @@ import { UrlInterceptor } from '@core/services/api/url.interceptor';
 import { ThreeModule } from '@shared/modules/three/three.module';
 
 export const API_URL = new InjectionToken<string>('api.url');
+export const MODEL_SETTINGS = new InjectionToken<string>('[MODEL_SETTINGS]');
 
 @NgModule({
     declarations: [AppComponent],
@@ -17,6 +18,10 @@ export const API_URL = new InjectionToken<string>('api.url');
         {
             provide: API_URL,
             useValue: environment.API_URL,
+        },
+        {
+            provide: MODEL_SETTINGS,
+            useValue: environment.MODEL,
         },
         {
             provide: HTTP_INTERCEPTORS,
