@@ -17,3 +17,16 @@ export class FileHelper {
         );
     }
 }
+
+export function checkGLTFVersion(arrayBuffer: ArrayBuffer): boolean {
+    console.log(arrayBuffer);
+    const text = new TextDecoder().decode(new Uint8Array(arrayBuffer));
+    console.log(text);
+    const json = JSON.parse(text);
+    console.log(json);
+    return (
+        json.asset &&
+        json.asset.version &&
+        parseFloat(json.asset.version) >= 2.0
+    );
+}

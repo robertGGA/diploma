@@ -26,6 +26,8 @@ export async function transformVideoToImages(file: string) {
     }
 }
 
+export class FileService {}
+
 function createFolderIfNotExists(folderPath: string) {
     if (!fs.existsSync(folderPath)) {
         fs.mkdirSync(folderPath, { recursive: true });

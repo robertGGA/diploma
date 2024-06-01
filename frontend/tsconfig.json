@@ -21,6 +21,7 @@
 		"useDefineForClassFields": false,
 		"lib": ["ES2022", "dom"],
         "paths": {
+            "@three/*": ["./node_modules/three/*"],
             "@angular/*": [
                 "./node_modules/@angular/*"
             ],

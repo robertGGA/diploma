@@ -1,6 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import * as child from 'child_process';
-import { transformVideoToImages } from '@services/file.service';
+import { FileService, transformVideoToImages } from '@services/file.service';
+import * as path from 'node:path';
+import * as fs from 'node:fs';
+import file from '@src/middleware/file';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { NodeIO } from '@gltf-transform/core';
+import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 
 class GenerateController {
     async upload(req: Request<{}, {}>, res: Response) {
@@ -26,40 +32,35 @@ class GenerateController {
         }
     }
 
-    async testPython(req: Request<{}, {}, { images: File[] }>, res: Response) {
+    async testPython(req: Request<{}, {}>, res: Response) {
         try {
-            const result = await executePython<any>(
-                '/Users/gadelshinrr/Desktop/diploma/python-libs/object-finder/index.py',
-                req.body.images
-            );
-            res.json({ res: result });
+            if (req.files) {
+                const gltf = await executePython('', req.files);
+                const io = new NodeIO().registerExtensions(ALL_EXTENSIONS);
+                const document = await io.read(gltf as string);
+                const arrayBuffer = await io.writeBinary(document);
+
+                // Устанавливаем заголовки для отправки бинарных данных
+                res.set('Content-Type', 'application/octet-stream');
+                res.send(arrayBuffer);
+            } else {
+                res.status(414).send();
+            }
+
+            // res.json({ res: result });
         } catch (e) {
             res.status(500).send(e);
         }
 
         async function executePython<T>(path: string, ...args: Array<T>) {
-            console.log(path, args);
             const params = args.map(data => {
-                if (!data) {
-                    return '';
-                }
-
-                if (typeof data === 'string') {
+                console.log(typeof data === 'object' && data instanceof Blob);
+                if (typeof data === 'object' && data instanceof Blob) {
                     return data;
                 }
-
-                if (
-                    typeof data === 'number' ||
-                    typeof data === 'boolean' ||
-                    typeof data === 'string'
-                ) {
-                    return data.toString();
-                }
-
-                return '';
             });
 
-            const py = child.spawn('python', [path, ...params]);
+            const py = child.spawn('python', {});
 
             const result = await new Promise((resolve, reject) => {
                 let output: unknown;

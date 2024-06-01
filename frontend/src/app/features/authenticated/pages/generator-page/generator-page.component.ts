@@ -5,6 +5,7 @@ import {
     Component,
     ElementRef,
     HostListener,
+    inject,
     Renderer2,
     ViewChild,
 } from '@angular/core';
@@ -22,15 +23,8 @@ import {
 import { FileService } from '@core/services/api/file.service';
 import { DestroyService } from '@core/services/destroy.service';
 import { AuthenticatedModule } from '@features/authenticated/authenticated.module';
-import {
-    delay,
-    filter,
-    finalize,
-    map,
-    switchMap,
-    takeUntil,
-} from 'rxjs/operators';
-import { from, Observable } from 'rxjs';
+import { delay, finalize, map, switchMap, takeUntil } from 'rxjs/operators';
+import { from, Observable, of } from 'rxjs';
 import { ACCEPT_TYPES } from '@shared/ui/drag-n-drop/drag-n-drop.types';
 import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import {
@@ -38,6 +32,7 @@ import {
     Camera,
     Color,
     GridHelper,
+    ObjectLoader,
     PerspectiveCamera,
 } from 'three';
 import { LoadingService } from '@core/services/loading.service';
@@ -47,6 +42,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DownloadDialogComponent } from '@features/authenticated/pages/generator-page/components/dialogs/download-dialog/download-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FileHelper } from '@shared/helpers/file.helper';
+import { MODEL_SETTINGS } from '@app/app.module';
 
 @Component({
     selector: 'rg-generator-page',
@@ -75,6 +71,7 @@ export class GeneratorPageComponent implements AfterViewInit {
     isExpanded = false;
     isVisibleGrid = true;
     private rotateIdAnimation: number | null = null;
+    modelSettings = inject(MODEL_SETTINGS);
 
     @ViewChild('canvas', { static: false }) canvas:
         | ElementRef<HTMLCanvasElement>
@@ -159,11 +156,26 @@ export class GeneratorPageComponent implements AfterViewInit {
                 .pipe(
                     delay(1),
                     switchMap(() => {
-                        return from(
-                            loader.loadAsync(
-                                'assets/tJny_uDJr1k_0424202348.glb'
-                            )
+                        return this.fileService
+                            .pythonExecute(this.formGroup.value.file)
+                            .pipe(map(res => res.buffer));
+                    }),
+                    switchMap(res => {
+                        const loader = new GLTFLoader();
+                        let currentGLTF: GLTF = {} as GLTF;
+                        loader.parse(
+                            res,
+                            '',
+                            gltf => {
+                                currentGLTF = gltf;
+                            },
+                            () => {
+                                loader.parse(this.modelSettings, '', gltf => {
+                                    currentGLTF = gltf;
+                                });
+                            }
                         );
+                        return of(currentGLTF);
                     }),
                     finalize(() => {
                         this.loading$.next(false);
