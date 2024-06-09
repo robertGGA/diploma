@@ -5,8 +5,9 @@
 
     <main>
         <ul *ngIf="data">
-            <li>
-                <a [href]="modelLink" download>Скачать GLTF-модель</a>
+            <li class="list">
+                <button (click)="downloadGLBModel()">Скачать GLB-модель</button>
+                <button (click)="download()">Скачать GLTF-модель</button>
             </li>
         </ul>
     </main>

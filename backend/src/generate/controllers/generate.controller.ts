@@ -1,14 +1,14 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import * as child from 'child_process';
-import { FileService, transformVideoToImages } from '@services/file.service';
-import * as path from 'node:path';
-import * as fs from 'node:fs';
-import file from '@src/middleware/file';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { transformVideoToImages } from '@services/file.service';
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 
 class GenerateController {
+    async getFile(req: Request<{}, {}>, res: Response) {
+        return res.json(null);
+    }
+
     async upload(req: Request<{}, {}>, res: Response) {
         try {
             if (req.file) {
@@ -32,7 +32,7 @@ class GenerateController {
         }
     }
 
-    async testPython(req: Request<{}, {}>, res: Response) {
+    async executeScript(req: Request<{}, {}>, res: Response) {
         try {
             if (req.files) {
                 const gltf = await executePython('', req.files);
@@ -46,35 +46,56 @@ class GenerateController {
             } else {
                 res.status(414).send();
             }
-
-            // res.json({ res: result });
         } catch (e) {
             res.status(500).send(e);
         }
 
         async function executePython<T>(path: string, ...args: Array<T>) {
-            const params = args.map(data => {
-                console.log(typeof data === 'object' && data instanceof Blob);
-                if (typeof data === 'object' && data instanceof Blob) {
-                    return data;
-                }
-            });
+            const params: string = args
+                .map(data => {
+                    if (typeof data === 'object' && data instanceof File) {
+                        return data.name;
+                    }
+                    return '';
+                })
+                .join(',');
 
-            const py = child.spawn('python', {});
+            const pyImprove = child.spawn('python', [
+                '../python-libs/enchance-image/index.py',
+                params,
+                'assets',
+            ]);
+
+            const pyGenerator = child.spawn('python', [
+                '../python-libs/generator/index.py',
+                params,
+                'assets/models',
+            ]);
 
             const result = await new Promise((resolve, reject) => {
                 let output: unknown;
 
-                py.stdout.on('data', data => {
-                    output = JSON.parse(data);
+                pyImprove.stdout.on('data', data => {
+                    pyGenerator.stdout.on('data', data => {
+                        output = JSON.parse(data);
+                    });
+
+                    pyGenerator.stderr.on('data', data => {
+                        console.error('[generato]: ' + data);
+                        reject('error: ' + data);
+                    });
+
+                    pyGenerator.on('exit', code => {
+                        resolve(output);
+                    });
                 });
 
-                py.stderr.on('data', data => {
-                    console.error('[python]: ' + data);
+                pyImprove.stderr.on('data', data => {
+                    console.error('[improve]: ' + data);
                     reject('error: ' + data);
                 });
 
-                py.on('exit', code => {
+                pyImprove.on('exit', code => {
                     resolve(output);
                 });
             });

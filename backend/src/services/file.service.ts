@@ -12,7 +12,7 @@ export async function transformVideoToImages(file: string) {
         createFolderIfNotExists(outputFolderPath);
 
         ffmpeg(inputVideoPath)
-            .outputOptions('-vf', 'fps=1')
+            .outputOptions('-vf', 'fps=10')
             .output(outputFolderPath + '/output_%03d.jpg')
             .on('end', () => {
                 console.log('Извлечение кадров завершено.');

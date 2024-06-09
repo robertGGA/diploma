@@ -32,7 +32,6 @@ import {
     Camera,
     Color,
     GridHelper,
-    ObjectLoader,
     PerspectiveCamera,
 } from 'three';
 import { LoadingService } from '@core/services/loading.service';
@@ -154,28 +153,16 @@ export class GeneratorPageComponent implements AfterViewInit {
             this.fileService
                 .upload(this.formGroup.value.file[0])
                 .pipe(
-                    delay(1),
-                    switchMap(() => {
-                        return this.fileService
-                            .pythonExecute(this.formGroup.value.file)
-                            .pipe(map(res => res.buffer));
-                    }),
+                    delay(100),
                     switchMap(res => {
-                        const loader = new GLTFLoader();
-                        let currentGLTF: GLTF = {} as GLTF;
-                        loader.parse(
-                            res,
-                            '',
-                            gltf => {
-                                currentGLTF = gltf;
-                            },
-                            () => {
-                                loader.parse(this.modelSettings, '', gltf => {
-                                    currentGLTF = gltf;
-                                });
-                            }
-                        );
-                        return of(currentGLTF);
+                        // const loader = new GLTFLoader();
+                        // let currentGLTF: GLTF = {} as GLTF;
+                        // loader.parse(this.modelSettings, '', gltf => {
+                        //     currentGLTF = gltf;
+                        // });
+                        // return of(currentGLTF);
+                        console.log(this.modelSettings);
+                        return from(loader.loadAsync(this.modelSettings));
                     }),
                     finalize(() => {
                         this.loading$.next(false);
