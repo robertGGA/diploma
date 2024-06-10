@@ -20,7 +20,7 @@ export class GenerateRouter extends RouterExtension {
         this.router.post(
             '/python',
             [FileMiddleware.any('file')],
-            generateController.testPython
+            generateController.executeScript
         );
 
         return this.router;
