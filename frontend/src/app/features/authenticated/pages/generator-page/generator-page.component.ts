@@ -23,8 +23,15 @@ import {
 import { FileService } from '@core/services/api/file.service';
 import { DestroyService } from '@core/services/destroy.service';
 import { AuthenticatedModule } from '@features/authenticated/authenticated.module';
-import { delay, finalize, map, switchMap, takeUntil } from 'rxjs/operators';
-import { from, Observable, of } from 'rxjs';
+import {
+    catchError,
+    delay,
+    finalize,
+    map,
+    switchMap,
+    takeUntil,
+} from 'rxjs/operators';
+import { EMPTY, from, Observable, of } from 'rxjs';
 import { ACCEPT_TYPES } from '@shared/ui/drag-n-drop/drag-n-drop.types';
 import { GLTF, GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import {
@@ -149,20 +156,26 @@ export class GeneratorPageComponent implements AfterViewInit {
     sendFile() {
         if (this.formGroup.value?.file) {
             this.loading$.next(true);
-            const loader = new GLTFLoader();
             this.fileService
                 .upload(this.formGroup.value.file[0])
                 .pipe(
                     delay(100),
-                    switchMap(res => {
-                        // const loader = new GLTFLoader();
-                        // let currentGLTF: GLTF = {} as GLTF;
-                        // loader.parse(this.modelSettings, '', gltf => {
-                        //     currentGLTF = gltf;
-                        // });
-                        // return of(currentGLTF);
-                        console.log(this.modelSettings);
-                        return from(loader.loadAsync(this.modelSettings));
+                    switchMap(() => {
+                        return this.fileService.pythonExecute([
+                            this.formGroup.value.file[0],
+                        ]);
+                    }),
+                    switchMap(buffer => {
+                        const loader = new GLTFLoader();
+                        let currentGLTF: GLTF = {} as GLTF;
+                        loader.parse(buffer, '', gltf => {
+                            currentGLTF = gltf;
+                        });
+                        return of(currentGLTF);
+                    }),
+                    catchError(err => {
+                        console.error(err);
+                        return EMPTY;
                     }),
                     finalize(() => {
                         this.loading$.next(false);
